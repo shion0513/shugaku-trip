@@ -95,7 +95,7 @@ async function searchRouteMode(mode,dest){
   if(!Route||typeof Route.computeRoutes!=='function')throw Error('Routesライブラリを読み込めません。Maps JavaScript APIの「routes」ライブラリが利用できるAPIキーか確認してください。');
   diag.push('Routes API: 読み込みOK');
   if(mode==='walk'){
-   const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'WALKING',fields:['*'],language:'ja',regionCode:'JP'};
+   const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'WALKING',fields:['*']};
    const result=await Route.computeRoutes(req);const routes=result.routes||[];
    if(!routes.length)throw Error('徒歩ルートが返されませんでした。');
    const r=routes[0];content.innerHTML='<div class="route-option selected"><div class="route-summary"><div class="route-time">徒歩</div><div class="route-duration">'+esc(r.localizedValues?.duration||formatMillis(r.durationMillis))+'</div></div><div class="route-steps">'+renderRouteSteps(r)+'</div></div><div class="diag ok">現在地と目的地を確認できました。徒歩ルート取得OK</div>';drawSelectedRoute(r);return;
@@ -104,7 +104,7 @@ async function searchRouteMode(mode,dest){
   const results=await Promise.all(offsets.map(async min=>{
    const departureTime=new Date(Date.now()+min*60000);
    try{
-    const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'TRANSIT',departureTime,computeAlternativeRoutes:true,transitPreference:{allowedTransitModes:['BUS','SUBWAY','TRAIN','LIGHT_RAIL','RAIL'],routingPreference:'FEWER_TRANSFERS'},fields:['*'],language:'ja',regionCode:'JP'};
+    const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'TRANSIT',departureTime,computeAlternativeRoutes:true,transitPreference:{allowedTransitModes:['BUS','SUBWAY','TRAIN','LIGHT_RAIL','RAIL'],routingPreference:'FEWER_TRANSFERS'},fields:['*']};
     const result=await Route.computeRoutes(req);
     return {min,departureTime,result,error:null};
    }catch(error){return {min,departureTime,result:null,error};}
