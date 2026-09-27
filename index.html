@@ -1,6 +1,6 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>修学旅行プラン v5</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;background:#f3f5f7;color:#202124}.hidden{display:none!important}.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(145deg,#f5f7fa,#e9edf2)}.card{background:#fff;padding:30px;border-radius:22px;box-shadow:0 18px 50px #0002;width:min(420px,92vw)}input,button{font:inherit}input{width:100%;padding:12px 14px;border:1px solid #d9dde3;border-radius:12px;margin:7px 0 12px;outline:none}input:focus{border-color:#777;box-shadow:0 0 0 3px #0000000b}button{border:0;border-radius:11px;padding:9px 13px;background:#222;color:#fff;cursor:pointer}button:hover{filter:brightness(.95)}button.ghost{background:#fff;color:#333;border:1px solid #d9dde3}.error{color:#d93025;min-height:22px;margin-top:8px}.hint,.muted,.small{color:#6b7280;font-size:12px}.app{height:100vh;display:none}.top{height:58px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 16px;gap:12px}.top h1{font-size:18px;margin:0;font-weight:700}.current{margin-left:auto;font-size:13px;color:#666}.tabs{height:48px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;padding-left:14px;gap:5px}.tab{background:transparent;color:#777;border-radius:0;border-bottom:3px solid transparent;padding:0 18px}.tab.active{color:#111;border-bottom-color:#222;font-weight:700}.panel{height:calc(100vh - 106px);display:none}.panel.active{display:block}.layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;height:100%}.side{background:#fff;overflow:auto;border-left:1px solid #e5e7eb}.plan-side{max-width:760px;margin:auto;border-left:0;border-right:0}.toolbar{padding:11px;display:flex;gap:7px;position:sticky;top:0;background:#fff;z-index:3;border-bottom:1px solid #eee}.toolbar button{font-size:12px}.item{margin:8px 10px;border:1px solid #e3e5e8;border-radius:15px;background:#fff;padding:11px 12px;cursor:pointer;box-shadow:0 2px 8px #00000008}.item:hover,.item.active{border-color:#bbb}.row{display:flex;align-items:center;gap:9px}.num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#222;color:#fff;font-size:12px;font-weight:700}.name{font-weight:700;flex:1}.actions{display:flex;gap:6px;margin-top:9px}.actions button{font-size:11px;padding:7px 9px}.danger{background:#fff;color:#c62828;border:1px solid #f0c7c7}.transfer{margin:0 18px 10px;border-left:2px solid #bbb;padding:7px 12px;color:#555}.transfer-title{font-size:11px;font-weight:700;color:#333}.settings{position:fixed;right:16px;top:66px;background:#fff;width:min(390px,calc(100vw - 32px));padding:18px;border-radius:18px;box-shadow:0 15px 45px #0003;z-index:5000}.settings h3{margin:0 0 10px}.mapwrap{position:relative;height:100%;background:#e8eaed}.map{height:100%;width:100%}.map-loading{position:absolute;z-index:10;top:14px;left:14px;background:#fff;padding:9px 12px;border-radius:12px;box-shadow:0 3px 14px #0002;font-size:12px}.route-panel{position:absolute;z-index:20;left:14px;bottom:14px;width:min(430px,calc(100% - 28px));max-height:68%;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 10px 35px #0003;padding:14px;display:none}.route-panel.show{display:block}.route-head{display:flex;align-items:center;gap:10px}.route-head h3{margin:0;font-size:16px}.route-close{margin-left:auto;background:#f1f3f4;color:#444;border-radius:50%;width:32px;height:32px;padding:0}.route-tabs{display:flex;gap:6px;margin:10px 0}.route-tab{flex:1;background:#f1f3f4;color:#555;padding:9px;border-radius:10px;font-weight:700}.route-tab.active{background:#222;color:#fff}.route-option{border:1px solid #e2e5e9;border-radius:14px;padding:11px;margin-top:10px;cursor:pointer}.route-option.selected{border-color:#222}.route-summary{display:flex;gap:10px;align-items:center}.route-time{font-weight:800;font-size:17px}.route-duration{font-size:12px;color:#666}.route-steps{margin-top:8px}.step{display:flex;gap:9px;padding:7px 0;border-top:1px solid #f0f1f2;font-size:12px}.step-icon{width:25px;text-align:center}.route-error{color:#b3261e;background:#fff4f2;border-radius:10px;padding:10px;margin-top:10px;font-size:12px}.locbtn{position:absolute;z-index:12;right:14px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#fff;color:#333;box-shadow:0 3px 15px #0003;padding:0;font-size:18px}.legend{font-size:11px;color:#666;margin-top:7px}.diag{background:#f7f8fa;border:1px solid #e1e4e8;border-radius:10px;padding:9px;margin-top:9px;font-size:11px;white-space:pre-wrap;word-break:break-word}.ok{color:#137333}.warn{color:#b06000}
-@media(max-width:800px){.layout{grid-template-columns:1fr}.side{display:none}.route-panel{left:8px;bottom:8px;width:calc(100% - 16px);max-height:55%}.top h1{font-size:16px}}
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>修学旅行プラン v7</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;background:#f3f5f7;color:#202124}.hidden{display:none!important}.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(145deg,#f5f7fa,#e9edf2)}.card{background:#fff;padding:30px;border-radius:22px;box-shadow:0 18px 50px #0002;width:min(420px,92vw)}input,button{font:inherit}input{width:100%;padding:12px 14px;border:1px solid #d9dde3;border-radius:12px;margin:7px 0 12px;outline:none}input:focus{border-color:#777;box-shadow:0 0 0 3px #0000000b}button{border:0;border-radius:11px;padding:9px 13px;background:#222;color:#fff;cursor:pointer}button:hover{filter:brightness(.95)}button.ghost{background:#fff;color:#333;border:1px solid #d9dde3}.error{color:#d93025;min-height:22px;margin-top:8px}.hint,.muted,.small{color:#6b7280;font-size:12px}.app{height:100vh;display:none}.top{height:58px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 16px;gap:12px}.top h1{font-size:18px;margin:0;font-weight:700}.current{margin-left:auto;font-size:13px;color:#666}.tabs{height:48px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;padding-left:14px;gap:5px}.tab{background:transparent;color:#777;border-radius:0;border-bottom:3px solid transparent;padding:0 18px}.tab.active{color:#111;border-bottom-color:#222;font-weight:700}.panel{height:calc(100vh - 106px);display:none}.panel.active{display:block}.layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;height:100%}.side{background:#fff;overflow:auto;border-left:1px solid #e5e7eb}.plan-side{max-width:760px;margin:auto;border-left:0;border-right:0}.toolbar{padding:11px;display:flex;gap:7px;position:sticky;top:0;background:#fff;z-index:3;border-bottom:1px solid #eee}.toolbar button{font-size:12px}.item{margin:8px 10px;border:1px solid #e3e5e8;border-radius:15px;background:#fff;padding:11px 12px;cursor:pointer;box-shadow:0 2px 8px #00000008}.item:hover,.item.active{border-color:#bbb}.row{display:flex;align-items:center;gap:9px}.num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#222;color:#fff;font-size:12px;font-weight:700}.name{font-weight:700;flex:1}.actions{display:flex;gap:6px;margin-top:9px}.actions button{font-size:11px;padding:7px 9px}.danger{background:#fff;color:#c62828;border:1px solid #f0c7c7}.transfer{margin:0 18px 10px;border-left:2px solid #bbb;padding:7px 12px;color:#555}.transfer-title{font-size:11px;font-weight:700;color:#333}.settings{position:fixed;right:16px;top:66px;background:#fff;width:min(390px,calc(100vw - 32px));padding:18px;border-radius:18px;box-shadow:0 15px 45px #0003;z-index:5000}.settings h3{margin:0 0 10px}.mapwrap{position:relative;height:100%;background:#e8eaed}.map{height:100%;width:100%}.map-loading{position:absolute;z-index:10;top:14px;left:14px;background:#fff;padding:9px 12px;border-radius:12px;box-shadow:0 3px 14px #0002;font-size:12px}.route-panel{position:absolute;z-index:20;left:12px;top:12px;bottom:12px;width:min(430px,calc(100% - 24px));max-height:none;overflow:auto;background:#fff;border-radius:12px;box-shadow:0 4px 18px #0003;padding:0;display:none}.route-panel::-webkit-scrollbar{width:7px}.route-panel::-webkit-scrollbar-thumb{background:#c8cdd2;border-radius:8px}.route-panel.show{display:block}.route-head{display:flex;align-items:center;gap:10px;padding:14px 14px 8px;position:sticky;top:0;background:#fff;z-index:2;border-bottom:1px solid #eee}.route-head h3{margin:0;font-size:17px}.route-close{margin-left:auto;background:#f1f3f4;color:#444;border-radius:50%;width:32px;height:32px;padding:0}.route-tabs{display:flex;gap:0;margin:0;padding:0 10px;border-bottom:1px solid #e5e7eb;position:sticky;top:55px;background:#fff;z-index:2}.route-tab{flex:1;background:#fff;color:#5f6368;padding:11px 8px;border-radius:0;font-weight:700;border-bottom:3px solid transparent}.route-tab.active{background:#fff;color:#1a73e8;border-bottom-color:#1a73e8}.route-option{border:0;border-bottom:1px solid #e6e8eb;border-left:4px solid transparent;border-radius:0;padding:12px 14px;margin:0;cursor:pointer;background:#fff}.route-option:hover{background:#f8f9fa}.route-option.selected{border-left-color:#1a73e8;background:#f8fbff}.route-summary{display:flex;gap:10px;align-items:baseline}.route-time{font-weight:800;font-size:19px;letter-spacing:.1px}.route-duration{font-size:12px;color:#5f6368}.route-meta{display:flex;gap:10px;align-items:center;margin-top:4px;color:#5f6368;font-size:12px}.route-fare{font-weight:700;color:#202124}.route-frequency{color:#188038}.route-intro{padding:9px 14px;color:#5f6368;font-size:11px;border-bottom:1px solid #eee}.route-steps{margin-top:9px;padding-left:3px}.step{display:flex;gap:9px;padding:8px 0;border-top:1px solid #f0f1f2;font-size:12px;position:relative}.step-icon{width:25px;text-align:center;flex:none}.transit-step{padding-left:0}.timeline-dot{width:12px;height:12px;border-radius:50%;border:3px solid #1a73e8;background:#fff;margin:2px auto}.line-badge{border-left:5px solid #5f6368;padding-left:8px;margin-bottom:3px}.line-short{display:inline-block;margin-left:6px;font-size:11px;color:#5f6368}.walk-step{color:#4a4a4a}.route-station{font-size:12px;color:#202124}.route-action{font-size:11px;color:#5f6368;margin-top:2px}.route-error{color:#b3261e;background:#fff4f2;border-radius:10px;padding:10px;margin-top:10px;font-size:12px}.locbtn{position:absolute;z-index:12;right:14px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#fff;color:#333;box-shadow:0 3px 15px #0003;padding:0;font-size:18px}.legend{font-size:11px;color:#666;margin-top:7px}.diag{background:#f7f8fa;border:1px solid #e1e4e8;border-radius:10px;padding:9px;margin-top:9px;font-size:11px;white-space:pre-wrap;word-break:break-word}.ok{color:#137333}.warn{color:#b06000}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side{display:none}.route-panel{left:8px;top:auto;bottom:8px;width:calc(100% - 16px);max-height:64%;border-radius:14px}.top h1{font-size:16px}}
 </style></head><body>
 <div id="login" class="login"><div class="card"><h2>修学旅行サイト</h2><p>パスワードを入力してください。</p><input id="pw" type="password" placeholder="パスワード"><button onclick="login()" style="width:100%">入る</button><div id="err" class="error"></div></div></div>
 <div id="app" class="app"><header class="top"><h1 id="title">修学旅行プラン</h1><span id="clock" class="current"></span><button class="ghost" onclick="toggleSettings()">設定</button></header><div class="tabs"><button id="tabPlan" class="tab active" onclick="showTab('plan')">予定</button><button id="tabMap" class="tab" onclick="showTab('map')">地図</button></div>
@@ -56,7 +56,7 @@ async function switchRouteMode(mode,id){
  await ensureGeo(); if(!geoPos){$('routeContent').innerHTML='<div class="route-error">現在地が取得できません。位置情報を許可してください。</div>';return;}
  await searchRouteMode(mode,dest);
 }
-function routeFields(){return ['path','legs','localizedValues','viewport','routeLabels'];}
+function routeFields(){return ['path','legs','localizedValues','viewport','routeLabels','travelAdvisory'];}
 function routeTime(v){return v instanceof Date?v:(v?.toDate?v.toDate():new Date(v));}
 function routeStepInfo(step){
  const td=step.transitDetails;
@@ -65,91 +65,104 @@ function routeStepInfo(step){
   const depT=routeTime(td.departureTime),arrT=routeTime(td.arrivalTime); const vehicle=line.vehicle?.type||'';
   const icon=vehicle==='BUS'?'🚌':(vehicle==='SUBWAY'?'🚇':(vehicle==='TRAM'?'🚊':'🚃'));
   const color=line.color||'#5f6368';
-  return {html:'<div class="step transit-step"><div class="step-icon">'+icon+'</div><div><div class="line-badge" style="border-left-color:'+esc(color)+'"><b>'+esc(line.name||line.nameShort||'公共交通')+'</b>'+(line.nameShort?'<span class="line-short">'+esc(line.nameShort)+'</span>':'')+'</div><div>'+esc(dep)+' <b>'+fmtTime(depT)+'</b> → '+esc(arr)+' <b>'+fmtTime(arrT)+'</b></div>'+(td.headsign?'<div class="small">方面：'+esc(td.headsign)+'</div>':'')+(td.stopCount?'<div class="small">'+esc(String(td.stopCount))+'駅・停留所</div>':'')+'</div></div>',color};
+  return {html:'<div class="step transit-step"><div class="step-icon">'+icon+'</div><div><div class="line-badge" style="border-left-color:'+esc(color)+'"><b>'+esc(line.name||line.nameShort||'公共交通')+'</b>'+(line.nameShort?'<span class="line-short">'+esc(line.nameShort)+'</span>':'')+'</div><div class="route-station">'+esc(dep)+' <b>'+fmtTime(depT)+'</b> → '+esc(arr)+' <b>'+fmtTime(arrT)+'</b></div>'+(td.headsign?'<div class="route-action">方面：'+esc(td.headsign)+'</div>':'')+(td.stopCount!=null?'<div class="route-action">'+esc(String(td.stopCount))+'駅・停留所</div>':'')+'</div></div>',color};
  }
- return {html:'<div class="step"><div class="step-icon">🚶</div><div><b>徒歩</b> '+esc(step.instructions||'徒歩区間')+'<br><span class="small">'+esc(step.localizedValues?.staticDuration||formatMillis(step.staticDurationMillis))+'</span></div></div>',color:'#777'};
+ return {html:'<div class="step walk-step"><div class="step-icon">🚶</div><div><b>徒歩</b> '+esc(step.instructions||'徒歩区間')+'<br><span class="small">'+esc(step.localizedValues?.staticDuration||formatMillis(step.staticDurationMillis))+'</span></div></div>',color:'#1a73e8'};
+}
+function legacyStepInfo(step){
+ const td=step.transit?.details;
+ if(td){
+  const line=td.line||{}; const dep=td.departure_stop?.name||''; const arr=td.arrival_stop?.name||'';
+  const depT=td.departure_time?.value||td.departure_time; const arrT=td.arrival_time?.value||td.arrival_time;
+  const vt=line.vehicle?.type||''; const icon=vt==='BUS'?'🚌':(vt==='SUBWAY'?'🚇':(vt==='TRAM'?'🚊':'🚃'));
+  const color=line.color||'#1a73e8';
+  return {html:'<div class="step transit-step"><div class="step-icon">'+icon+'</div><div><div class="line-badge" style="border-left-color:'+esc(color)+'"><b>'+esc(line.name||line.short_name||'公共交通')+'</b>'+(line.short_name?'<span class="line-short">'+esc(line.short_name)+'</span>':'')+'</div><div class="route-station">'+esc(dep)+' <b>'+fmtTime(depT)+'</b> → '+esc(arr)+' <b>'+fmtTime(arrT)+'</b></div>'+(td.headsign?'<div class="route-action">方面：'+esc(td.headsign)+'</div>':'')+(td.num_stops!=null?'<div class="route-action">'+esc(String(td.num_stops))+'駅・停留所</div>':'')+'</div></div>',color};
+ }
+ return {html:'<div class="step walk-step"><div class="step-icon">🚶</div><div><b>徒歩</b> '+esc(step.instructions||step.html_instructions||'徒歩')+'<br><span class="small">'+esc(step.duration?.text||'')+'</span></div></div>',color:'#1a73e8'};
 }
 function formatMillis(ms){if(!ms)return'';return Math.max(1,Math.round(ms/60000))+'分';}
-function renderRouteSteps(route){const steps=route.legs?.flatMap(l=>l.steps||[])||[];return steps.map(routeStepInfo).map(x=>x.html).join('');}
+function renderRouteSteps(route,legacy=false){const steps=legacy?(route.legs||[]).flatMap(l=>l.steps||[]):(route.legs?.flatMap(l=>l.steps||[])||[]);return steps.map(legacy?legacyStepInfo:routeStepInfo).map(x=>x.html).join('');}
+function legacyRouteTimes(route){
+ const steps=(route.legs||[]).flatMap(l=>l.steps||[]); const transit=steps.filter(s=>s.transit?.details);
+ if(!transit.length)return {dep:null,arr:null};
+ return {dep:transit[0].transit.details.departure_time?.value||transit[0].transit.details.departure_time,arr:transit[transit.length-1].transit.details.arrival_time?.value||transit[transit.length-1].transit.details.arrival_time};
+}
+function routeSummary(route,legacy=false){
+ const legs=route.legs||[]; const fare=legacy?route.fare?.text:''; const duration=legacy?legs.reduce((n,l)=>n+(l.duration?.value||0),0):route.durationMillis; const time=legacy?legacyRouteTimes(route):(()=>{const ss=legs.flatMap(l=>l.steps||[]).filter(s=>s.transitDetails);return {dep:ss[0]?.transitDetails?.departureTime,arr:ss.at(-1)?.transitDetails?.arrivalTime}})();
+ const lines=legacy?(legs.flatMap(l=>l.steps||[]).map(s=>s.transit?.details?.line).filter(Boolean)):(legs.flatMap(l=>l.steps||[]).map(s=>s.transitDetails?.transitLine).filter(Boolean));
+ const lineNames=[...new Set(lines.map(l=>l.name||l.short_name||l.nameShort).filter(Boolean))];
+ return {dep:time.dep,arr:time.arr,duration:legacy?Math.max(1,Math.round(duration/60))+'分':(route.localizedValues?.duration||formatMillis(duration)),fare,lines:lineNames};
+}
 async function drawSelectedRoute(route){
  clearRoute();
  try{
+  if(route.__legacy){
+   const polys=[];
+   (route.legs||[]).forEach(leg=>(leg.steps||[]).forEach(step=>{
+    const td=step.transit?.details; const path=step.path||[]; if(!path.length)return;
+    if(td){const color=td.line?.color||'#1a73e8';polys.push(new google.maps.Polyline({map:gmap,path,strokeColor:color,strokeOpacity:.95,strokeWeight:6,zIndex:8}));}
+    else {polys.push(new google.maps.Polyline({map:gmap,path,strokeColor:'#1a73e8',strokeOpacity:0,strokeWeight:4,icons:[{icon:{path:google.maps.SymbolPath.CIRCLE,scale:2,strokeColor:'#1a73e8',strokeOpacity:1,fillColor:'#fff',fillOpacity:1},offset:'0',repeat:'12px'}],zIndex:7}));}
+   }));
+   activePolys=polys; return;
+  }
   if(typeof route.createPolylines==='function'){
-   const polys=await route.createPolylines({polylineOptions:{strokeOpacity:.9,strokeWeight:5}});
-   activePolys=polys||[];activePolys.forEach(p=>p.setMap(gmap));
-  }else if(route.path){activePolys=[new google.maps.Polyline({map:gmap,path:route.path,strokeColor:'#1a73e8',strokeOpacity:.9,strokeWeight:5})];}
- }catch(e){console.warn('polyline draw failed',e);if(route.path)activePolys=[new google.maps.Polyline({map:gmap,path:route.path,strokeColor:'#1a73e8',strokeOpacity:.9,strokeWeight:5})];}
- if(route.viewport)gmap.fitBounds(route.viewport,50);
+   const polys=await route.createPolylines({polylineOptions:{strokeOpacity:.9,strokeWeight:5,zIndex:7}});activePolys=polys||[];activePolys.forEach(p=>p.setMap(gmap));
+  }else if(route.path){activePolys=[new google.maps.Polyline({map:gmap,path:route.path,strokeColor:'#1a73e8',strokeOpacity:.9,strokeWeight:6,zIndex:7})];}
+ }catch(e){console.warn('polyline draw failed',e);if(route.path)activePolys=[new google.maps.Polyline({map:gmap,path:route.path,strokeColor:'#1a73e8',strokeOpacity:.9,strokeWeight:6,zIndex:7})];}
+ if(route.viewport)gmap.fitBounds(route.viewport,70);
+}
+async function searchLegacyTransit(offsets,diag){
+ const {DirectionsService}=await google.maps.importLibrary('routes');
+ if(!DirectionsService)throw Error('DirectionsServiceが利用できません。');
+ const service=new DirectionsService(); const results=[]; const errors=[];
+ for(const min of offsets){
+  const departureTime=new Date(Date.now()+min*60000);
+  try{
+   const res=await service.route({origin:geoPos,destination:{lat:Number(window.currentRouteDest.lat),lng:Number(window.currentRouteDest.lng)},travelMode:google.maps.TravelMode.TRANSIT,provideRouteAlternatives:true,transitOptions:{departureTime,modes:[google.maps.TransitMode.BUS,google.maps.TransitMode.SUBWAY,google.maps.TransitMode.TRAIN,google.maps.TransitMode.TRAM,google.maps.TransitMode.RAIL],routingPreference:google.maps.TransitRoutePreference.FEWER_TRANSFERS},unitSystem:google.maps.UnitSystem.METRIC});
+   (res.routes||[]).forEach(r=>{r.__legacy=true;results.push({r,requested:departureTime,min});});
+  }catch(e){errors.push((min===0?'現在時刻':min+'分後')+': '+(e?.message||String(e)));}
+ }
+ diag.push('Legacy Directions検索ルート数: '+results.length);
+ return {results,errors};
+}
+function buildTransitOptions(items,content,diag,errors){
+ const usable=[];const seen=new Set();
+ items.forEach(x=>{const sm=routeSummary(x.r,x.r.__legacy);if(!sm.dep||!sm.arr)return;const key=String(sm.dep)+'|'+String(sm.arr)+'|'+sm.lines.join(',');if(!seen.has(key)){seen.add(key);usable.push({r:x.r,summary:sm});}});
+ usable.sort((a,b)=>routeTime(a.summary.dep)-routeTime(b.summary.dep));
+ if(!usable.length){let reason='Googleから公共交通ルートが1本も返されませんでした。';if(errors.length)reason+='\n\nAPIからのエラー:\n'+errors.slice(0,6).join('\n');content.innerHTML='<div class="diag"><b>ルート検索の診断</b>\n'+esc(reason)+'</div><div class="diag"><b>確認できた座標</b>\n'+esc(diag.join('\n'))+'</div>';return false;}
+ content.innerHTML='<div class="route-intro">現在時刻以降の候補。タップすると選択した経路だけを地図に表示します。</div>';
+ usable.slice(0,10).forEach((x,i)=>{
+  const opt=document.createElement('div');opt.className='route-option'+(i===0?' selected':'');
+  const s=x.summary; const lineText=s.lines.length?s.lines.join(' → '):'公共交通';
+  opt.innerHTML='<div class="route-summary"><div class="route-time">'+fmtTime(s.dep)+' → '+fmtTime(s.arr)+'</div><div class="route-duration">'+esc(s.duration)+'</div></div><div class="route-meta">'+(s.fare?'<span class="route-fare">'+esc(s.fare)+'</span>':'')+'<span>'+esc(lineText)+'</span></div><div class="route-steps" style="display:none">'+renderRouteSteps(x.r,!!x.r.__legacy)+'</div>';
+  opt.onclick=()=>{document.querySelectorAll('.route-option').forEach(el=>el.classList.remove('selected'));opt.classList.add('selected');document.querySelectorAll('.route-steps').forEach(el=>el.style.display='none');opt.querySelector('.route-steps').style.display='block';drawSelectedRoute(x.r);};
+  content.appendChild(opt);
+ });
+ const first=content.querySelector('.route-option');if(first){first.querySelector('.route-steps').style.display='block';drawSelectedRoute(usable[0].r);}
+ return true;
 }
 async function searchRouteMode(mode,dest){
- const content=$('routeContent');if(!content)return;
- content.innerHTML='<div class="small">'+(mode==='walk'?'徒歩ルートを検索中…':'現在地以降の公共交通候補を確認中…')+'</div>';clearRoute();
- const diag=[];
- const showDiag=(title,detail,cls='diag')=>'<div class="'+cls+'"><b>'+esc(title)+'</b>\n'+esc(detail)+'</div>';
+ const content=$('routeContent');if(!content)return; content.innerHTML='<div class="small route-intro">'+(mode==='walk'?'徒歩ルートを検索中…':'現在時刻以降の公共交通候補を検索中…')+'</div>';clearRoute();const diag=[];
  try{
   if(!geoPos)throw Error('現在地が取得できていません。');
   if(!Number.isFinite(Number(dest.lat))||!Number.isFinite(Number(dest.lng)))throw Error('目的地の緯度・経度がありません。目的地を編集して再検索してください。');
-  diag.push('現在地: '+geoPos.lat.toFixed(6)+', '+geoPos.lng.toFixed(6));
-  diag.push('目的地: '+Number(dest.lat).toFixed(6)+', '+Number(dest.lng).toFixed(6));
+  diag.push('現在地: '+geoPos.lat.toFixed(6)+', '+geoPos.lng.toFixed(6));diag.push('目的地: '+Number(dest.lat).toFixed(6)+', '+Number(dest.lng).toFixed(6));
   const {Route}=await google.maps.importLibrary('routes');
-  if(!Route||typeof Route.computeRoutes!=='function')throw Error('Routesライブラリを読み込めません。Maps JavaScript APIの「routes」ライブラリが利用できるAPIキーか確認してください。');
+  if(!Route||typeof Route.computeRoutes!=='function')throw Error('Routesライブラリを読み込めません。');
   diag.push('Routes API: 読み込みOK');
   if(mode==='walk'){
-   const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'WALKING',fields:['*']};
-   const result=await Route.computeRoutes(req);const routes=result.routes||[];
-   if(!routes.length)throw Error('徒歩ルートが返されませんでした。');
-   const r=routes[0];content.innerHTML='<div class="route-option selected"><div class="route-summary"><div class="route-time">徒歩</div><div class="route-duration">'+esc(r.localizedValues?.duration||formatMillis(r.durationMillis))+'</div></div><div class="route-steps">'+renderRouteSteps(r)+'</div></div><div class="diag ok">現在地と目的地を確認できました。徒歩ルート取得OK</div>';drawSelectedRoute(r);return;
+   const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'WALKING',fields:['*']};const result=await Route.computeRoutes(req);const routes=result.routes||[];if(!routes.length)throw Error('徒歩ルートが返されませんでした。');
+   const r=routes[0];const s=routeSummary(r,false);content.innerHTML='<div class="route-option selected"><div class="route-summary"><div class="route-time">徒歩</div><div class="route-duration">'+esc(s.duration)+'</div></div><div class="route-steps">'+renderRouteSteps(r)+'</div></div>';drawSelectedRoute(r);return;
   }
-  const offsets=[0,8,16,24,32,40,55,70];
-  const results=await Promise.all(offsets.map(async min=>{
-   const departureTime=new Date(Date.now()+min*60000);
-   try{
-    const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'TRANSIT',departureTime,computeAlternativeRoutes:true,transitPreference:{allowedTransitModes:['BUS','SUBWAY','TRAIN','LIGHT_RAIL','RAIL'],routingPreference:'FEWER_TRANSFERS'},fields:['*']};
-    const result=await Route.computeRoutes(req);
-    return {min,departureTime,result,error:null};
-   }catch(error){return {min,departureTime,result:null,error};}
-  }));
-  const all=[];const errors=[];
-  results.forEach(x=>{
-   if(x.error){errors.push((x.min===0?'現在時刻':x.min+'分後')+': '+(x.error.message||String(x.error)));return;}
-   const rs=x.result?.routes||[];
-   if(rs.length)all.push(...rs.map(r=>({r,requested:x.departureTime})));
-   else if(x.result?.fallbackInfo)errors.push((x.min===0?'現在時刻':x.min+'分後')+': fallback '+JSON.stringify(x.result.fallbackInfo));
-  });
-  diag.push('検索候補: '+offsets.map(x=>x===0?'現在':x+'分後').join(' / '));
-  diag.push('Routes APIが返したルート数: '+all.length);
-  if(errors.length)diag.push('一部検索エラー:\n'+errors.slice(0,4).join('\n'));
-  const usable=[];const seen=new Set();
-  all.forEach(x=>{
-   const steps=x.r.legs?.flatMap(l=>l.steps||[])||[];
-   const transit=steps.filter(st=>st.transitDetails);
-   if(!steps.length||!transit.length)return;
-   const dep=transit[0].transitDetails?.departureTime;const arr=transit[transit.length-1].transitDetails?.arrivalTime;
-   const key=String(dep)+'|'+String(arr)+'|'+transit.map(st=>st.transitDetails?.transitLine?.name||st.transitDetails?.transitLine?.nameShort||'').join(',');
-   if(!seen.has(key)){seen.add(key);usable.push({r:x.r,dep,arr});}
-  });
-  usable.sort((a,b)=>routeTime(a.dep)-routeTime(b.dep));
-  if(!usable.length){
-   let reason='Googleから公共交通ルートが1本も返されませんでした。';
-   if(errors.length)reason+='\n\nAPIからのエラー:\n'+errors.slice(0,6).join('\n');
-   content.innerHTML=showDiag('ルート検索の診断',reason)+showDiag('確認できた座標',diag.join('\n'));
-   return;
-  }
-  content.innerHTML='<div class="small">現在時刻以降の候補です。候補をタップすると、その経路だけを地図に表示します。</div>';
-  usable.slice(0,12).forEach((x,i)=>{
-   const opt=document.createElement('div');opt.className='route-option'+(i===0?' selected':'');
-   const steps=x.r.legs?.flatMap(l=>l.steps||[])||[];const transit=steps.filter(st=>st.transitDetails);
-   const dep=transit[0]?.transitDetails?.departureTime;const arr=transit[transit.length-1]?.transitDetails?.arrivalTime;
-   const lineNames=transit.map(st=>st.transitDetails?.transitLine?.name||st.transitDetails?.transitLine?.nameShort||'公共交通').filter(Boolean);
-   opt.innerHTML='<div class="route-summary"><div class="route-time">'+fmtTime(dep)+' → '+fmtTime(arr)+'</div><div class="route-duration">'+esc(x.r.localizedValues?.duration||formatMillis(x.r.durationMillis))+'</div></div><div class="small">'+esc([...new Set(lineNames)].join(' → '))+'</div><div class="route-steps" style="display:none">'+renderRouteSteps(x.r)+'</div>';
-   opt.onclick=()=>{document.querySelectorAll('.route-option').forEach(el=>el.classList.remove('selected'));opt.classList.add('selected');document.querySelectorAll('.route-steps').forEach(el=>el.style.display='none');opt.querySelector('.route-steps').style.display='block';drawSelectedRoute(x.r)};
-   content.appendChild(opt);
-  });
-  const first=content.querySelector('.route-option');if(first){first.querySelector('.route-steps').style.display='block';drawSelectedRoute(usable[0].r)}
- }catch(e){
-  console.error('Route search diagnostic:',e);
-  const msg=e?.message||String(e);
-  content.innerHTML=showDiag('ルート検索でエラーが発生しました',msg)+showDiag('確認できた情報',diag.join('\n'))+'<div class="small" style="margin-top:8px">Google Cloudで Maps JavaScript API / Routes API / Billing / APIキーの制限を確認してください。</div>';
+  const offsets=[0,8,16,24,32,40]; const results=await Promise.all(offsets.map(async min=>{const departureTime=new Date(Date.now()+min*60000);try{const req={origin:geoPos,destination:{lat:Number(dest.lat),lng:Number(dest.lng)},travelMode:'TRANSIT',departureTime,computeAlternativeRoutes:true,transitPreference:{allowedTransitModes:['BUS','SUBWAY','TRAIN','LIGHT_RAIL','RAIL'],routingPreference:'FEWER_TRANSFERS'},fields:['*']};const result=await Route.computeRoutes(req);return {min,result,error:null};}catch(error){return {min,result:null,error};}}));
+  const all=[];const errors=[];results.forEach(x=>{if(x.error){errors.push((x.min===0?'現在時刻':x.min+'分後')+': '+(x.error.message||String(x.error)));return;}const rs=x.result?.routes||[];rs.forEach(r=>all.push({r,requested:new Date(Date.now()+x.min*60000)}));});diag.push('検索候補: '+offsets.map(x=>x===0?'現在':x+'分後').join(' / '));diag.push('Routes APIが返したルート数: '+all.length);if(errors.length)diag.push('一部検索エラー:\n'+errors.slice(0,4).join('\n'));
+  if(buildTransitOptions(all,content,diag,errors))return;
+  // New Routes API returned no usable transit route. Use the Maps JavaScript DirectionsService as a compatibility fallback.
+  diag.push('Routes APIで候補が得られないため、DirectionsServiceへ切り替えます。');
+  const legacy=await searchLegacyTransit([0,10,20,30,40],diag);
+  if(buildTransitOptions(legacy.results,content,diag,legacy.errors))return;
+  const allErr=errors.concat(legacy.errors);content.innerHTML='<div class="diag"><b>ルート検索の診断</b>\n'+esc('公共交通ルートを取得できませんでした。\n\n'+allErr.slice(0,6).join('\n'))+'</div><div class="diag"><b>確認できた座標</b>\n'+esc(diag.join('\n'))+'</div><div class="small" style="padding:10px 14px">Google Cloudで「Directions API（レガシー）」を有効にしてください。APIキーのAPI制限にも追加してください。</div>';
+ }catch(e){console.error('Route search diagnostic:',e);content.innerHTML='<div class="diag"><b>ルート検索でエラーが発生しました</b>\n'+esc(e?.message||String(e))+'</div><div class="diag"><b>確認できた情報</b>\n'+esc(diag.join('\n'))+'</div>';
  }
 }
 function reorder(fromId,toId){if(fromId===toId)return;const a=data.destinations.findIndex(d=>d.id===fromId),b=data.destinations.findIndex(d=>d.id===toId);const [x]=data.destinations.splice(a,1);data.destinations.splice(b,0,x);data.transfers=data.destinations.slice(0,-1).map((d,i)=>data.transfers[i]||{});save();render()}
