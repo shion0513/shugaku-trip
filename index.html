@@ -112,34 +112,46 @@ async function drawSelectedRoute(route){
  if(route.viewport)gmap.fitBounds(route.viewport,70);
 }
 async function searchLegacyTransit(offsets,diag){
- // Google Mapsの経路検索に近いDirectionsServiceを優先して使用。
- // transitOptionsは最小限にし、Google側に交通手段の組み合わせを任せる。
- const DirectionsService=google.maps.DirectionsService;
+ // 公共交通はDirectionsServiceを優先。Transitではまず「標準設定」で検索し、
+ // それでも見つからない場合だけ交通手段・到着時刻を変えて再検索する。
+ const {DirectionsService}=await google.maps.importLibrary('routes');
  if(!DirectionsService)throw Error('DirectionsServiceが利用できません。');
  const service=new DirectionsService(); const results=[]; const errors=[];
- for(const min of offsets){
-  const departureTime=new Date(Date.now()+min*60000);
-  try{
-   const request={
-    origin:geoPos,
-    destination:{lat:Number(window.currentRouteDest.lat),lng:Number(window.currentRouteDest.lng)},
-    travelMode:google.maps.TravelMode.TRANSIT,
-    provideRouteAlternatives:true,
-    transitOptions:{departureTime},
-    unitSystem:google.maps.UnitSystem.METRIC
-   };
-   const res=await service.route(request);
-   const routes=res?.routes||[];
-   if(!routes.length){
-    errors.push((min===0?'現在時刻':min+'分後')+': ZERO_RESULTS（公共交通ルートなし）');
+ const dest={lat:Number(window.currentRouteDest.lat),lng:Number(window.currentRouteDest.lng)};
+ const tried=new Set();
+ async function one(label,request){
+   const key=label+'|'+JSON.stringify({departureTime:request.transitOptions?.departureTime?.getTime?.(),arrivalTime:request.transitOptions?.arrivalTime?.getTime?.(),modes:request.transitOptions?.modes});
+   if(tried.has(key))return; tried.add(key);
+   try{
+     const res=await service.route(request);
+     const routes=res?.routes||[];
+     if(routes.length){routes.forEach(r=>{r.__legacy=true;results.push({r,requested:request.transitOptions?.departureTime||request.transitOptions?.arrivalTime||new Date(),label});});}
+     else errors.push(label+': ZERO_RESULTS（公共交通ルートなし）');
+   }catch(e){
+     const status=e?.status||e?.code||'';
+     errors.push(label+': '+(status?status+' / ':'')+(e?.message||String(e)));
    }
-   routes.forEach(r=>{r.__legacy=true;results.push({r,requested:departureTime,min});});
-  }catch(e){
-   const status=e?.status||e?.code||'';
-   errors.push((min===0?'現在時刻':min+'分後')+': '+(status?status+' / ':'')+(e?.message||String(e)));
-  }
+ }
+ // まず「今」。departureTimeを指定しないことで、Google側の現在時刻判定をそのまま使う。
+ await one('現在時刻（標準）',{origin:geoPos,destination:dest,travelMode:google.maps.TravelMode.TRANSIT,unitSystem:google.maps.UnitSystem.METRIC});
+ // 未来の候補。provideRouteAlternativesは使わず、時刻を変えて候補を集める。
+ for(const min of offsets.filter(x=>x>0)){
+   const t=new Date(Date.now()+min*60000);
+   await one(min+'分後（標準）',{origin:geoPos,destination:dest,travelMode:google.maps.TravelMode.TRANSIT,unitSystem:google.maps.UnitSystem.METRIC,transitOptions:{departureTime:t}});
+ }
+ // 標準検索で全滅した場合のみ、到着時刻指定で再試行。
+ if(!results.length){
+   const arrival=new Date(Date.now()+35*60000);
+   await one('35分後到着指定',{origin:geoPos,destination:dest,travelMode:google.maps.TravelMode.TRANSIT,unitSystem:google.maps.UnitSystem.METRIC,transitOptions:{arrivalTime:arrival}});
+ }
+ // さらに全滅した場合、バス・鉄道を明示して再試行。
+ if(!results.length){
+   const modes=[google.maps.TransitMode.BUS,google.maps.TransitMode.SUBWAY,google.maps.TransitMode.TRAIN,google.maps.TransitMode.TRAM];
+   const t=new Date(Date.now()+5*60000);
+   await one('5分後（バス・鉄道優先）',{origin:geoPos,destination:dest,travelMode:google.maps.TravelMode.TRANSIT,unitSystem:google.maps.UnitSystem.METRIC,transitOptions:{departureTime:t,modes}});
  }
  diag.push('DirectionsService検索ルート数: '+results.length);
+ diag.push('検索方式: 標準Transit → 時刻変更 → 到着時刻指定 → バス・鉄道優先');
  return {results,errors};
 }
 function buildTransitOptions(items,content,diag,errors){
@@ -179,7 +191,7 @@ async function searchRouteMode(mode,dest){
   diag.push('Routes APIで候補が得られないため、Google Maps型のDirectionsServiceへ切り替えます。');
   const legacy=await searchLegacyTransit([0,8,16,24,32,40],diag);
   if(buildTransitOptions(legacy.results,content,diag,legacy.errors))return;
-  const allErr=errors.concat(legacy.errors);content.innerHTML='<div class="diag"><b>ルート検索の診断</b>\n'+esc('公共交通ルートを取得できませんでした。\n\n'+allErr.slice(0,6).join('\n'))+'</div><div class="diag"><b>確認できた座標</b>\n'+esc(diag.join('\n'))+'</div><div class="small" style="padding:10px 14px">Google Cloudで「Directions API（レガシー）」を有効にし、APIキーのAPI制限にも追加してください。Routes APIがHTTPリファラー制限で拒否されても、こちらが有効なら公共交通検索を続行できます。</div>';
+  const allErr=errors.concat(legacy.errors);content.innerHTML='<div class="diag"><b>ルート検索の診断</b>\n'+esc('公共交通ルートを取得できませんでした。\n\n'+allErr.slice(0,6).join('\n'))+'</div><div class="diag"><b>確認できた座標</b>\n'+esc(diag.join('\n'))+'</div><div class="small" style="padding:10px 14px">Google Cloudで「Directions API（レガシー）」が有効で、APIキーのAPI制限にも追加されているか確認してください。Routes APIのリファラーエラーは別系統なので、公共交通検索はDirectionsServiceで継続しています。</div>';
  }catch(e){console.error('Route search diagnostic:',e);content.innerHTML='<div class="diag"><b>ルート検索でエラーが発生しました</b>\n'+esc(e?.message||String(e))+'</div><div class="diag"><b>確認できた情報</b>\n'+esc(diag.join('\n'))+'</div>';
  }
 }
