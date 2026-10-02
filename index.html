@@ -227,6 +227,17 @@ async function searchLegacyTransit(offsets,diag){
  diag.push('検索方式: 標準Transit → 時刻変更 → 到着時刻指定 → バス・鉄道優先');
  return {results,errors};
 }
+function openGoogleMapsTransitRoute(){
+ const d=window.currentRouteDest;
+ if(!d||!geoPos)return;
+ const origin=encodeURIComponent(geoPos.lat+','+geoPos.lng);
+ const destination=encodeURIComponent(Number(d.lat)+','+Number(d.lng));
+ const url='https://www.google.com/maps/dir/?api=1&origin='+origin+'&destination='+destination+'&travelmode=transit';
+ window.open(url,'_blank','noopener,noreferrer');
+}
+function googleMapsTransitFallbackHTML(){
+ return '<div class=\"route-error\"><b>サイト内で公共交通ルートを取得できませんでした。</b><br>Google Mapsで同じ「現在地 → 選択地点」の公共交通ルートを開けます。<button type=\"button\" onclick=\"openGoogleMapsTransitRoute()\" style=\"margin-top:9px;width:100%;background:#1a73e8;color:#fff\">Google Mapsで公共交通ルートを開く</button></div>';
+}
 function buildTransitOptions(items,content,diag,errors){
  const usable=[];const seen=new Set();
  items.forEach(x=>{const sm=routeSummary(x.r,x.r.__legacy);if(!sm.dep||!sm.arr)return;const key=String(sm.dep)+'|'+String(sm.arr)+'|'+sm.lines.join(',');if(!seen.has(key)){seen.add(key);usable.push({r:x.r,summary:sm});}});
@@ -265,7 +276,7 @@ async function searchRouteMode(mode,dest){
   diag.push('Routes APIで候補が得られないため、Google Maps型のDirectionsServiceへ切り替えます。');
   const legacy=await searchLegacyTransit([0,8,16,24,32,40],diag);
   if(buildTransitOptions(legacy.results,content,diag,legacy.errors))return;
-  const allErr=errors.concat(legacy.errors);content.innerHTML='<div class="diag"><b>ルート検索の診断</b>\n'+esc('公共交通ルートを取得できませんでした。\n\n'+allErr.slice(0,6).join('\n'))+'</div><div class="diag"><b>確認できた座標</b>\n'+esc(diag.join('\n'))+'</div><div class="small" style="padding:10px 14px">Google Cloudで「Directions API（レガシー）」が有効で、APIキーのAPI制限にも追加されているか確認してください。Routes APIのリファラーエラーは別系統なので、公共交通検索はDirectionsServiceで継続しています。</div>';
+  const allErr=errors.concat(legacy.errors);content.innerHTML='<div class="diag"><b>ルート検索の診断</b>\n'+esc('公共交通ルートを取得できませんでした。\n\n'+allErr.slice(0,6).join('\n'))+'</div><div class="diag"><b>確認できた座標</b>\n'+esc(diag.join('\n'))+'</div>'+googleMapsTransitFallbackHTML()+'<div class="small" style="padding:10px 14px">Googleの公共交通データからサイト内表示用のルートを取得できなかったため、Google Maps本体で同じ出発地・目的地を公共交通検索します。</div>';
  }catch(e){console.error('Route search diagnostic:',e);content.innerHTML='<div class="diag"><b>ルート検索でエラーが発生しました</b>\n'+esc(e?.message||String(e))+'</div><div class="diag"><b>確認できた情報</b>\n'+esc(diag.join('\n'))+'</div>';
  }
 }
