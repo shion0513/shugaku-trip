@@ -9,7 +9,7 @@
 <div id="editPanel" class="panel"><div class="side plan-side" style="height:100%"><div class="toolbar"><button onclick="addFreePlan()">＋ 計画を追加</button></div><div class="plan-edit-note">ここでは「計画」の追加・日時・タイトル・メモを編集できます。計画は地図には反映されません。</div><div id="editPlanList"></div></div></div>
 <div id="mapPanel" class="panel"><div class="layout"><div class="mapwrap"><div id="map" class="map"></div><div id="mapLoading" class="map-loading">地図を準備中…</div><button class="locbtn" onclick="locateMe()" title="現在地">⌖</button><button id="mobileGoogleBtn" class="mobile-google-btn" onclick="openCurrentRouteInGoogleMaps()" title="Googleマップで開く">Googleマップ</button><div id="routePanel" class="route-panel"></div></div><aside class="side"><div class="toolbar"><button class="ghost" onclick="routeFromCurrentToSelected()">⌖ 現在地から選択地点へ</button><button class="ghost" onclick="openCurrentRouteInGoogleMaps()">Googleマップ</button></div><div class="plan-edit-note">予定を選択すると、現在地からその地点までのルートを地図に表示します。<br>「Googleマップ」で現在表示中の経路をGoogle Maps本体で詳しく開けます。</div><div id="list"></div></aside></div></div></div>
 <div id="planModal" class="plan-modal" onclick="if(event.target===this)closePlanModal()"><div class="plan-modal-card"><div id="planModalHead" class="plan-modal-head">予定を追加</div><div class="plan-modal-body"><div class="plan-fields"><label>タイトル</label><input id="planTitleInput" type="text" placeholder="タイトルを入力"><label>メモ</label><input id="planNoteInput" type="text" placeholder="メモ（任意）"><input id="planDateTimeInput" class="plan-date-native" type="datetime-local"><div class="hint">タイトルはここに直接入力できます。日時は右側のダイヤルで変更できます。</div></div><div class="dial-panel"><div class="dial-title">日時</div><div id="dialDisplay" class="dial-display">2026年10月20日　14:00</div><div id="dialWheels" class="dial-wheels"><div id="dialYear" class="dial-col"></div><div id="dialMonth" class="dial-col"></div><div id="dialDay" class="dial-col"></div><div id="dialHour" class="dial-col"></div><div id="dialMinute" class="dial-col"></div><div class="dial-selection"></div></div><div class="dial-labels"><span>年</span><span>月</span><span>日</span><span>時</span><span>分</span></div></div></div><div class="plan-modal-actions"><button onclick="closePlanModal()">キャンセル</button><button onclick="savePlanModal()">追加</button></div></div></div>
-<div id="settings" class="settings hidden"><h3>サイト設定</h3><label>タイトル</label><input id="setTitle"><label>パスワード</label><input id="setPw" type="password"><label>Google Maps APIキー</label><input id="setApi" type="password" placeholder="AIza..."><div class="small">APIキーはGoogle CloudでHTTPリファラー制限を設定してから公開してください。</div><h3 style="margin-top:18px">共同編集</h3><label>共有ID</label><input id="setSharedId" placeholder="shugaku-trip-main"><label>Firebase Web APIキー</label><input id="setFbApiKey" type="password"><label>Firebase Auth domain</label><input id="setFbAuthDomain" placeholder="xxxxx.firebaseapp.com"><label>Firebase Project ID</label><input id="setFbProjectId" placeholder="xxxxx"><label>Firebase App ID</label><input id="setFbAppId" placeholder="1:123...:web:..."><div class="small">匿名ログインを使い、同じ共有IDの全員が予定・計画を編集できます。Firebase Authenticationの匿名ログインを有効にし、Firestoreでログイン済みユーザーに読み書きを許可してください。</div><div class="row" style="margin-top:10px"><button onclick="saveSettings()">保存して反映</button><button class="ghost" onclick="toggleSettings()">閉じる</button></div></div>
+<div id="settings" class="settings hidden"><h3>サイト設定</h3><label>タイトル</label><input id="setTitle"><label>パスワード</label><input id="setPw" type="password"><label>Google Maps APIキー</label><input id="setApi" type="password" placeholder="AIza..."><div class="small">APIキーはGoogle CloudでHTTPリファラー制限を設定してから公開してください。</div><h3 style="margin-top:18px">共同編集</h3><div class="small" style="padding:10px 12px;background:#f7f8fa;border:1px solid #e5e7eb;border-radius:12px;line-height:1.6">Firebaseはこのサイトに設定済みです。共有IDも全員共通で自動設定されます。各スマホでFirebaseの情報を入力する必要はありません。</div><div class="row" style="margin-top:10px"><button onclick="saveSettings()">保存して反映</button><button class="ghost" onclick="toggleSettings()">閉じる</button></div></div>
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
   import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
@@ -18,8 +18,15 @@
 </script>
 <script>
 const KEY='tripFinalGoogle';
-const DEFAULT={title:'修学旅行プラン',password:'1234',apiKey:'',showTransfers:true,destinations:[],transfers:[],freePlans:[],sharedId:'shugaku-trip-main',firebase:{apiKey:'',authDomain:'',projectId:'',appId:''}};
+const BUILTIN_FIREBASE={apiKey:'AIzaSyBbxrJyhiZeMucGjydWHyCqSK7iXDH05ps',authDomain:'shingaku-trip.firebaseapp.com',projectId:'shingaku-trip',appId:'1:397468022924:web:9cd17b085a4ea1e53a23a9'};
+const BUILTIN_SHARED_ID='shugaku-trip-main';
+const BUILTIN_MAPS_KEY='AIzaSyBaWDlBhKKcYkBowXzdkHisL0Nth-8la8E';
+const DEFAULT={title:'修学旅行プラン',password:'1234',apiKey:BUILTIN_MAPS_KEY,showTransfers:true,destinations:[],transfers:[],freePlans:[],sharedId:BUILTIN_SHARED_ID,firebase:BUILTIN_FIREBASE};
 let data=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(DEFAULT));
+// Firebase/共有IDはHTMLに埋め込み、端末ごとの入力を不要にする。
+data.sharedId=BUILTIN_SHARED_ID;
+data.firebase={...BUILTIN_FIREBASE};
+data.apiKey=BUILTIN_MAPS_KEY;
 let gmap=null,gmarkers=[],groute=null,locationMarker=null,geoPos=null,googleReady=false;
 let sharedDb=null,sharedRef=null,sharedUnsub=null,sharedUid='',sharedReady=false,sharedApplying=false,sharedWriteTimer=null;
 const $=id=>document.getElementById(id); const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -615,19 +622,15 @@ function toggleSettings(){
  $('settings').classList.toggle('hidden');
  $('setTitle').value=data.title;
  $('setPw').value=data.password;
- $('setApi').value=data.apiKey||'';
- $('setSharedId').value=data.sharedId||'shugaku-trip-main';
- $('setFbApiKey').value=data.firebase?.apiKey||'';
- $('setFbAuthDomain').value=data.firebase?.authDomain||'';
- $('setFbProjectId').value=data.firebase?.projectId||'';
- $('setFbAppId').value=data.firebase?.appId||'';
+ $('setApi').value=BUILTIN_MAPS_KEY;
 }
 async function saveSettings(){
  data.title=$('setTitle').value||data.title;
  data.password=$('setPw').value||data.password;
- data.apiKey=$('setApi').value.trim();
- data.sharedId=$('setSharedId').value.trim()||'shugaku-trip-main';
- data.firebase={apiKey:$('setFbApiKey').value.trim(),authDomain:$('setFbAuthDomain').value.trim(),projectId:$('setFbProjectId').value.trim(),appId:$('setFbAppId').value.trim()};
+ data.apiKey=BUILTIN_MAPS_KEY;
+ data.sharedId=BUILTIN_SHARED_ID;
+ data.firebase={...BUILTIN_FIREBASE};
+data.apiKey=BUILTIN_MAPS_KEY;
  persistLocal();
  $('title').textContent=data.title;
  $('settings').classList.add('hidden');
