@@ -12,28 +12,13 @@
 <script>
 const KEY='tripFinalGoogle';
 const DEFAULT={title:'修学旅行プラン',password:'1234',apiKey:'',showTransfers:true,destinations:[],transfers:[],freePlans:[]};
-let data;
-try{
- const raw=localStorage.getItem(KEY);
- data=raw?JSON.parse(raw):null;
-}catch(e){
- console.error('保存データの読み込みに失敗しました。既存データは上書きしません。',e);
- data=null;
-}
-data=data||JSON.parse(JSON.stringify(DEFAULT));
-
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(JSON.stringify(DEFAULT));
 let gmap=null,gmarkers=[],groute=null,locationMarker=null,geoPos=null,googleReady=false;
 const $=id=>document.getElementById(id); const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
 function login(){const pw=$('pw').value;if(pw===data.password){localStorage.setItem('tripFinalGoogleLoggedIn','1');$('login').style.display='none';$('app').style.display='block';initApp()}else{$('err').textContent='パスワードが間違っています。';window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank','noopener,noreferrer')}}
 function initApp(){ $('title').textContent=data.title; tick(); setInterval(tick,1000); render(); if(data.apiKey) loadGoogle(); else $('mapLoading').textContent='設定からGoogle Maps APIキーを入力してください'; }
-function autoLogin(){
- try{
-  if(localStorage.getItem('tripFinalGoogleLoggedIn')==='1'){
-   loginOpen=false;$('login').style.display='none';$('app').style.display='block';initApp();
-  }
- }catch(e){console.error('自動ログイン初期化エラー',e);$('login').style.display='grid';$('app').style.display='none';}
-}
+function autoLogin(){if(localStorage.getItem('tripFinalGoogleLoggedIn')==='1'){loginOpen=false;$('login').style.display='none';$('app').style.display='block';initApp()}}
 let loginOpen=true;
 function tick(){$('clock').textContent=new Date().toLocaleString('ja-JP',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 function loadGoogle(){if(window.google?.maps){googleReady=true;initGoogleMap();return}$('mapLoading').textContent='Google Mapsを読み込み中…';window.__initGoogle=()=>{googleReady=true;initGoogleMap()};const s=document.createElement('script');s.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(data.apiKey)+'&v=weekly&loading=async&libraries=geocoding,places,routes&region=JP&language=ja&callback=__initGoogle';s.async=true;s.defer=true;s.onerror=()=>{$('mapLoading').textContent='Google Mapsを読み込めません。APIキー・API有効化・請求先を確認してください。'};document.head.appendChild(s)}
@@ -63,6 +48,34 @@ function renderEditPlanList(){
  if(!plans.length) box.innerHTML='<div class="muted" style="padding:24px;text-align:center">計画はまだありません。</div>';
 }
 function displayPlanDate(d){if(!d)return '';const m=String(d).match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?`${m[1]}年${Number(m[2])}月${Number(m[3])}日`:d}
+function makeTouchReorder(item,id,kind){
+ let startY=0,dragging=false;
+ item.addEventListener('pointerdown',e=>{
+  if(e.target.closest('button'))return;
+  startY=e.clientY;dragging=false;item.setPointerCapture?.(e.pointerId);
+ });
+ item.addEventListener('pointermove',e=>{
+  if(Math.abs(e.clientY-startY)>12)dragging=true;
+ });
+ item.addEventListener('pointerup',e=>{
+  if(!dragging)return;
+  const list=kind==='destination'?(data.destinations||[]):(data.freePlans||[]);
+  const from=list.findIndex(x=>String(x.id)===String(id));
+  if(from<0)return;
+  const cards=[...item.parentElement.children].filter(el=>el.classList.contains('item')&&el!==item);
+  let target=null,best=Infinity;
+  cards.forEach(el=>{const r=el.getBoundingClientRect();const d=Math.abs(e.clientY-(r.top+r.height/2));if(d<best){best=d;target=el;}});
+  if(!target)return;
+  const to=list.findIndex(x=>String(x.id)===String(target.dataset.id));
+  if(to<0||from===to)return;
+  const a=list[from],b=list[to];
+  const td={date:a.date||'',time:a.time||''};
+  a.date=b.date||'';a.time=b.time||'';
+  b.date=td.date;b.time=td.time;
+  save();render();
+ });
+ item.addEventListener('pointercancel',()=>{dragging=false});
+}
 function appendPlanItem(box,d,i,editable){
  const item=document.createElement('div');item.className='item';item.dataset.id=d.id;item.dataset.kind='destination';
  const dt=d.date?(displayPlanDate(d.date)+'　'+(d.time||'')):(d.time||'時刻未設定');
@@ -89,30 +102,7 @@ function appendFreePlanItem(box,p,editable){
   item.querySelector('[data-action=delete]').addEventListener('click',e=>{e.stopPropagation();delFreePlan(p.id)});
  }
  box.appendChild(item);
-}
-function makeTouchReorder(item,id,kind){
- let startY=0,dragging=false;
- item.addEventListener('pointerdown',e=>{
-  if(e.target.closest('button'))return;
-  startY=e.clientY;dragging=false;item.setPointerCapture?.(e.pointerId);
- });
- item.addEventListener('pointermove',e=>{if(Math.abs(e.clientY-startY)>12)dragging=true;});
- item.addEventListener('pointerup',e=>{
-  if(!dragging)return;
-  const list=kind==='destination'?(data.destinations||[]):(data.freePlans||[]);
-  const from=list.findIndex(x=>String(x.id)===String(id));
-  if(from<0)return;
-  const cards=[...item.parentElement.children].filter(el=>el.classList.contains('item')&&el!==item);
-  let target=null,best=Infinity;
-  cards.forEach(el=>{const r=el.getBoundingClientRect();const d=Math.abs(e.clientY-(r.top+r.height/2));if(d<best){best=d;target=el;}});
-  if(!target)return;
-  const to=list.findIndex(x=>String(x.id)===String(target.dataset.id));
-  if(to<0||to===from)return;
-  const a=list[from],b=list[to],td={date:a.date||'',time:a.time||''};
-  a.date=b.date||'';a.time=b.time||'';b.date=td.date;b.time=td.time;
-  save();render();
- });
- item.addEventListener('pointercancel',()=>{dragging=false;});
+ makeTouchReorder(item,p.id,'free');
 }
 function renderList(id){const box=$(id);box.innerHTML='';data.destinations.forEach((d,i)=>{const item=document.createElement('div');item.className='item';item.draggable=true;item.dataset.id=d.id;item.innerHTML='<div class="row"><div class="num"></div><div class="name">'+esc(d.name)+'</div><div class="muted">'+esc(d.date?(displayPlanDate(d.date)+'　'+(d.time||'')):(d.time||'時刻未設定'))+'</div></div><div class="muted" style="margin-top:5px">'+esc(d.note||'メモなし')+'</div><div class="actions"><button onclick="focusD('+d.id+')">地図</button><button class="ghost" onclick="editD('+d.id+')">編集</button><button class="danger" onclick="delD('+d.id+')">削除</button></div>';
 item.addEventListener('click',e=>{if(!e.target.closest('button'))focusD(d.id)});item.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',d.id));item.addEventListener('dragover',e=>e.preventDefault());item.addEventListener('drop',e=>{e.preventDefault();reorder(Number(e.dataTransfer.getData('text/plain')),d.id)});box.appendChild(item);if(i<data.destinations.length-1&&data.showTransfers){const t=data.transfers[i]||{};const tr=document.createElement('div');tr.className='transfer';tr.innerHTML='<div class="transfer-title">移動 '+(i+1)+' → '+(i+2)+'</div><div>'+esc(t.type||'移動情報未設定')+(t.line?'・'+esc(t.line):'')+'</div><div class="small">'+esc(t.depart||'--:--')+'発 → '+esc(t.arrive||'--:--')+'着</div><div class="small">'+esc(t.from||d.name)+' → '+esc(t.to||data.destinations[i+1].name)+'</div>';box.appendChild(tr)}})
@@ -340,7 +330,7 @@ async function searchRouteMode(mode,dest){
  }catch(e){console.error('Route search diagnostic:',e);content.innerHTML='<div class="diag"><b>ルート検索でエラーが発生しました</b>\n'+esc(e?.message||String(e))+'</div><div class="diag"><b>確認できた情報</b>\n'+esc(diag.join('\n'))+'</div>';
  }
 }
-function reorder(fromId,toId){if(String(fromId)===String(toId))return;const a=data.destinations.findIndex(d=>String(d.id)===String(fromId)),b=data.destinations.findIndex(d=>String(d.id)===String(toId));if(a<0||b<0)return;const x=data.destinations[a],y=data.destinations[b],td={date:x.date||'',time:x.time||''};x.date=y.date||'';x.time=y.time||'';y.date=td.date;y.time=td.time;data.transfers=data.destinations.slice(0,-1).map((d,i)=>data.transfers[i]||{});save();render()}
+function reorder(fromId,toId){if(String(fromId)===String(toId))return;const a=data.destinations.findIndex(d=>String(d.id)===String(fromId)),b=data.destinations.findIndex(d=>String(d.id)===String(toId));if(a<0||b<0)return;const x=data.destinations[a],y=data.destinations[b];const td={date:x.date||'',time:x.time||''};x.date=y.date||'';x.time=y.time||'';y.date=td.date;y.time=td.time;data.transfers=data.destinations.slice(0,-1).map((d,i)=>data.transfers[i]||{});save();render()}
 async function geocodePlace(name){
   if(!window.google?.maps) throw Error('google_not_loaded');
   try{
